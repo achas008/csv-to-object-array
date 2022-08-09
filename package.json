@@ -2,7 +2,7 @@
   "name": "csv-to-object-array",
   "version": "1.0.1",
   "description": "Convert a csv input into an array of objects, with column headers becoming properties.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "npx ts-node src/test.ts"
   },
