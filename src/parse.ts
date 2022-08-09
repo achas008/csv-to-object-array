@@ -16,7 +16,7 @@
     for(let i = 0; i < parsed.length; i++) {
         let row = parsed[i];
         if(row.length < headers.length) {
-            throw new Error('Invalid input. Some rows have less columns than there are headers.');
+            throw new Error('Invalid input. Some rows have less columns than there are headers. Row ' + (i + 1) + ' has ' + row.length + ' columns.');
         }
         let record: Record<string, string> = {};
         for(let j = 0; j < headers.length; j++) {
