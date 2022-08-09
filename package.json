@@ -1,6 +1,6 @@
 {
   "name": "csv-to-object-array",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Convert a csv input into an array of objects, with column headers becoming properties.",
   "main": "dist/index.js",
   "scripts": {
