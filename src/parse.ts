@@ -68,24 +68,26 @@ export function parseWithoutHeaders(input: string): string[][] {
         
         // If it's not in quotes and a new line, we're done with the current line.
         else if (!inQuotes && (c === '\r' || c === '\n')) {
-            if(current_cell)
-                current_line.push(current_cell);
+            current_line.push(current_cell);
             current_cell = "";
             if(current_line.length > 0)
                 result.push(current_line.map(cell => cell.trim()));
             current_line = [];
+            if(n === '\r' || n === '\n') {
+                i++;
+            }
             continue;
         }
 
         // If it's the beginning of the cell and it's a quote, we're in quotes.
-        else if (c === '"' && current_cell.trim().length === 0) {
+        else if (!inQuotes && c === '"' && current_cell.trim().length === 0) {
             inQuotes = true;
             continue;
         }
         
         // If we're in the middle of a cell and it's a quote, and the previous and next characters are not quotes, we're
         // at the end of the cell and can exit quotes.
-        else if (c === '"' && current_cell.trim() && n !== '"') {
+        else if (inQuotes && c === '"' && n !== '"') {
             inQuotes = false;
             continue;
         }
@@ -107,6 +109,9 @@ export function parseWithoutHeaders(input: string): string[][] {
         current_line.push(current_cell);
     if(current_line.length > 0)
         result.push(current_line.map(cell => cell.trim()));
+
+    // Remove lines that are empty or have cells that are all empty.
+    result = result.filter(line => line.filter(cell => cell.trim().length > 0).length > 0);
 
     return result;
 
